@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with venv_spider IDLE]
+@="Open with venv_spider IDLE"
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with venv_spider IDLE\command]
+@="\"C:\\venv_spider\\Scripts\\launch_idle.bat\" \"%1\""
