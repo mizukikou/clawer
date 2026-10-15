@@ -1,0 +1,38 @@
+# 匯入 Python 內建用來處理發送網路請求的標準函式庫
+import urllib.request
+
+# 定義目標網址，httpbin.org 是一個專門用來測試 HTTP 請求與回應的線上工具，
+# /user-agent 路由會直接回傳發送請求者的 User-Agent 識別字串。
+url = "http://httpbin.org"
+
+# ==========================================
+# 範例一：如果不偽裝成瀏覽器（使用預設設定）
+# ==========================================
+
+# 建立一個 Request 請求物件，此時沒有帶入任何自訂的 Headers（標頭）
+req = urllib.request.Request(url)
+
+# 使用 urlopen 發送請求，並透過 with 語法確保連線在使用完畢後會自動關閉
+with urllib.request.urlopen(req) as res:
+    # res.read() 讀取伺服器回傳的原始二進位資料（Bytes）
+    # .decode() 將其解碼為人類看自由的 UTF-8 字串並印出
+    # 預設執行結果會顯示：{"user-agent": "Python-urllib/3.x"}，這極易被網站防火牆封鎖
+    print(f"預設身分: {res.read().decode()}")
+
+
+# ==========================================
+# 範例二：偽裝成 Chrome 瀏覽器（自訂標頭）
+# ==========================================
+
+# 定義一個字典（Dictionary），在裡面設定 HTTP 請求標頭
+# 這裡將 'User-Agent' 設定為一般 Windows 10 電腦上 Chrome 123 瀏覽器的特徵字串
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/123.0.0.0'}
+
+# 重新建立一個 Request 物件，這次透過 headers 參數將上面偽裝的標頭塞進去
+req_fake = urllib.request.Request(url, headers=headers)
+
+# 再次發送請求
+with urllib.request.urlopen(req_fake) as res:
+    # 執行結果會顯示：{"user-agent": "Mozilla/5.0 (Windows NT 10.0; ... Chrome/123.0.0.0")"}
+    # 伺服器會誤以為這是一個真正的 Chrome 瀏覽器在瀏覽網頁，進而放行
+    print(f"偽裝身分: {res.read().decode()}")
