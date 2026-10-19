@@ -20,8 +20,13 @@ with urllib.request.urlopen(req) as response:
 ##    print(html_content)
 
 # 用正規表達式從整頁原始碼中，抓出所有 class="wikitable" 的 <table>...</table> 區塊
-# re.DOTALL：讓 . 也能匹配換行字元，否則多行的表格內容會抓不完整
 tables = re.findall(r'(<table class="wikitable">.*?</table>)',  html_content, re.DOTALL)
+#  . (點)：代表「任意字元」，不管是英文字母、中文字、數字還是標點符號都算。
+#  * (星號)：代表「出現 0 次或無數次」，意思是中間有多少個字都無所謂。
+#  ? (問號，非貪婪匹配 ⚠️ 最關鍵)：
+# 這是在告訴 Python：「遇到第一個 </table> 就請立刻停下來！」
+# 正規表達式中萬用字元 . (點) 雖可匹配任何字，唯獨無法匹配「換行符號（\n）」，加了re.DOTALL 會強行讓 . 擁有跨越換行的超能力。 
+
 print(len(tables))       # 這個頁面總共抓到幾個 wikitable 表格
 print("-"*50)
 print(tables[0])          # 印出第一個表格的原始 HTML，方便確認擷取是否正確

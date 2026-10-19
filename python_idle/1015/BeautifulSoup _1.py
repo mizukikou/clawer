@@ -49,3 +49,8 @@ print(f"ul 的子層數量：{len(children)}")
 # 	5. </li> 後面的「換行與空格」 ➔ (第 5 個孩子：文字)
 # 	6. <li>資料分析入門</li> ➔ (第 6 個孩子：標籤)
 # 	7. </li> 後面的「換行與空格」 ➔ (第 7 個孩子：文字)
+print(f"ul 的所有子層節點（包含文字節點）：{children}")
+print(f"ul 的所有子層節點：{[child.name for child in children if child.name is not None]}")
+# 這些「換行符號（\n）」或「空白」是沒有標籤名稱的，所以它們的 .name 會是 None。
+# 如果我們只想要真正的標籤節點，可以用上面那行 list comprehension 來過濾掉 None。
+# ，放在 for 最前面的那個 child.name，代表的是「最後要留下來、放進新列表裡的『結果值』」。
