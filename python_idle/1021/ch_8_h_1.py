@@ -47,6 +47,5 @@ for item in news_cards:
         'link': full_url,
         'date': date
     })
-
 # 印出最終結果驗證
 print(news_list)

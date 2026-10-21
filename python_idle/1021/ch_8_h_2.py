@@ -40,7 +40,8 @@ for item in movie_items:
     
     # 4. 使用列表生成式 (List Comprehension) 提取該電影的所有標籤文字
     tags_list = [span.text for span in item.select(".tags span")]
-    
+    # .select(".tags span")會抓出一個包含多個 Tag 物件的 Python 列表（List），例如：[<span>Python</span>, <span>爬蟲</span>]。
+
     # 5. 整理儲存於字典中，以電影名稱作為 Key，其 Value 包含評分與標籤
     movie_dict[name] = {
         'rating': rating_num,
